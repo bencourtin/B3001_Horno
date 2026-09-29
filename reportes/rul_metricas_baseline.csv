@@ -1,0 +1,5 @@
+modelo,MAE_log10,MAE_factor,R2,MAE_relev
+RF-A (dano + termico),1.0198,10.4658,0.7004,0.7777
+RF-B (solo termico),0.9416,8.741,0.6699,0.7325
+Persistencia (90 d),0.8633,7.2989,0.7679,0.585
+Media del train,1.9541,89.9679,-0.0026,1.7639

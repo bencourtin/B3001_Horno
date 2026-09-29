@@ -1,0 +1,56 @@
+nivel,feature,unidad,definicion
+0-4,horno,–,identificador del equipo (B-3001)
+0-4,ts / fecha / hora,–,"timestamp horario, y su fecha y hora desagregadas"
+0-4,paso,–,paso del horno: P1–P4
+0-4,tubo,–,termopar: banco (17/18/31/32) + posición (A–F)
+0-4,elev / cara,–,elevación (T1/T5/T10) y cara (SP/SO/NP/NO) del punto de medición
+0-4,temperatura,°C,"TMT medida, ya validada (NaN si el sensor está fallado)"
+0-4,valido,0/1,lectura presente y no descartada por sensor_frio
+0-4,run,0/1,horno en operación (mediana CONV ≥ 250 °C)
+0-4,sat,0/1,lectura clampeada en 700 °C por el historiador
+0-4,sensor_frio,0/1,<300 °C con el horno encendido: termopar fallado
+0-4,sensor_flat,0/1,std móvil 12 h < 0.05 °C en operación: lectura congelada
+0-4,h_desde_arranque,h,horas desde el fin de la última detención
+1,slope,°C/h,pendiente OLS móvil de 6 h
+1,slope_24h,°C/h,pendiente OLS móvil de 24 h
+1,delta,°C,T − mediana del paso: desvío contra sus hermanos
+1,delta_24h,°C,media móvil 24 h de delta
+1,delta_z_30d,–,z de delta contra su mediana/desvío móvil de 30 d: señal de anomalía
+1,anomalia,0/1,|delta_z_30d| > 4 en operación con lectura válida
+1,exposure,h,horas acumuladas ≥650 °C en operación (desde 2008)
+1,exposure_30d,h,ídem en los últimos 30 días
+1,exposure_frac_30d,–,exposure_30d / horas válidas en operación en 30 d
+1,thermal_dose_1h,1/h,"daño por fluencia de la hora: 1/t_ruptura(T), Larson-Miller"
+1,thermal_dose,–,suma de Robinson: fracción de vida consumida (0→1)
+1,thermal_dose_30d,–,daño acumulado en los últimos 30 días
+1,rank,1–6,puesto por temperatura dentro del paso (1 = más caliente)
+1,rank_horno,1–24,puesto por temperatura entre los 24 tubos
+1,hot,0/1,T ≥ 650 °C en operación
+1,persistence,h,horas consecutivas con hot = 1
+1,persistence_rank1,h,horas consecutivas siendo el más caliente del paso
+1,sensor_health_30d,–,fracción de horas de operación con lectura válida en 30 d
+1,lag_24h,°C,temperatura 24 h atrás: baseline de persistencia
+1,target_T_24h,°C,OBJETIVO · temperatura a t+24 h
+1,target_delta_24h,°C,OBJETIVO · delta a t+24 h
+1,target_hot_24h,0/1,OBJETIVO · hot a t+24 h
+1,target_dose_30d,–,OBJETIVO · daño por fluencia que el tubo acumulará en los próximos 30 d
+2,paso_mean / max / min / p95,°C,estadísticos entre los tubos válidos del paso
+2,paso_std,°C,desvío estándar entre tubos del paso
+2,paso_spread,°C,max − min: desbalance de fuego o de flujo en el paso
+2,paso_cv,–,std / |mean|: dispersión normalizada
+2,paso_hot_tube,–,id del tubo más caliente del paso
+2,paso_hot_tube_slope,°C/h,pendiente de 6 h de ese tubo
+2,paso_n_hot_tubes,0–6,tubos del paso con T ≥ 650 °C
+2,paso_n_tubos,0–6,tubos con lectura válida (denominador de los estadísticos)
+2,paso_conv / paso_ctrl,°C,convección y lazo de control del paso
+2,paso_delta_ctrl,°C,mean del paso − ctrl: desvío respecto del setpoint efectivo
+3,horno_global_mean / max / p95,°C,estadísticos entre los 24 tubos
+3,horno_global_spread,°C,max − min del horno completo
+3,horno_pass_gradient,°C,max − min de las medias de paso: desbalance entre pasos
+3,horno_critical_pass,–,paso con la media más alta
+3,horno_critical_pass_persistence,h,horas consecutivas del mismo paso como crítico
+3,horno_global_thermal_dose,–,media de thermal_dose de los 24 tubos
+3,horno_global_thermal_dose_max,–,máximo de thermal_dose: fija la vida remanente
+3,horno_global_slope,°C/h,pendiente 6 h de global_mean
+3,horno_global_instability,°C,std móvil 24 h de global_mean: volatilidad térmica
+3,horno_n_hot_tubes,0–24,tubos ≥650 °C en todo el horno
